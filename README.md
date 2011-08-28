@@ -1,0 +1,2 @@
+
+A javascript favicon creator.
