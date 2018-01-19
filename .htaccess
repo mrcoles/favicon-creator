@@ -1,0 +1,9 @@
+<IfModule mod_headers.c>
+Header set Connection keep-alive
+
+# Cache-control headers
+    # 1 MINUTE
+    <filesMatch "\.(html|htm)$">
+        Header set Cache-Control "max-age=60, must-revalidate"
+    </filesMatch>
+</IfModule>
