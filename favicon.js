@@ -249,12 +249,18 @@
       document.getElementById('wrap').appendChild(img_parent);
     }
     img_parent.innerHTML = (
-      '<div class="img-header">Generated Image &nbsp;<a title="hide image" href="#">x</a></div>' +
-      '<div class="img-footer">Success, you created an image! Right click and select &quot;save as&quot; (dragging to your desktop may not always work).</div>'
+      '<div class="img-header">Generated Image</div>' +
+      '<div class="img-footer">Success, you created an image! Right click and select &quot;save as&quot; (dragging to your desktop may not always work).<br /><br /><br /><a href="#">reset canvas</a></div>'
     );
     img_parent.getElementsByTagName('a')[0].onclick = function() {
-      var img_parent = document.getElementById('img');
-      img_parent.parentNode.removeChild(img_parent);
+      if (confirm('This will clear the canvas. Would you like to continue?')) {
+        for (var x = 0; x < dimension; x++) {
+          for (var y = 0; y < dimension; y++) {
+            document.getElementById(x + '_' + y).style.backgroundColor = '';
+          }
+        }
+        generateLowResIco(dimension);
+      }
       return false;
     };
     img_parent.appendChild(img);
