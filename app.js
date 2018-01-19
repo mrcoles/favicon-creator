@@ -97,7 +97,7 @@ var paint = new (function() {
       generateLowResIco(dimension);
     }, 1000);
   }
-  
+
 
   // Events
   this.pixelMouseDown = function(elt, evt) {
@@ -110,7 +110,7 @@ var paint = new (function() {
       return false;
     }
     color_on = true;
-    
+
     return self.pixelMouseOver(elt);
   }
   this.pixelMouseOver = function(elt) {
@@ -193,7 +193,7 @@ var paint = new (function() {
       generateLowResIco();
 
     })();
-    
+
   }
 
   // Actions

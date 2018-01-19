@@ -9,7 +9,7 @@
 		    html, body { background-color: #ccc; }
 			body { padding: 5px 40px; font-family: "courier new", courier, monospace; line-height: 1.2; width: 750px; margin: 10px auto; }
 			#wrap { position: relative; }
-			#main { border: solid 1px #999; height: 320px; width: 320px; background: #fff none scroll repeat; }
+			#main { border: solid 1px #999; height: 320px; width: 320px; background: #fff url(checkered-bg.png) scroll repeat; }
 
 			h1 { margin: 0 0 10px; padding: 0; }
 			p { margin: 1em 0; padding: 0; }
@@ -43,7 +43,7 @@
 			#cur_color_inside { float: left; width: 50px; height: 30px; margin: 4px; padding: 0; border: solid 1px #000; background-color: transparent; }
 			.tool_type { cursor: pointer; display: block; margin-bottom: 10px; font-style: inherit; font-weight: normal; font-size: .8em; }
 		</style>
-		<script src="favicon.js"></script><!-- bitmap generation code -->
+		<script src="favicon.js?1"></script><!-- bitmap generation code -->
 		<script src="app.js"></script>
 	</head>
 	<body class="dim16">
@@ -82,10 +82,10 @@
 			</div>
 		</div>
 		<p>
-                  <br /><br /><br /><br />
+	      <br /><br /><br /><br />
 		  transparent bg:
-		  <a href="#" onclick="return paint.actions.setBg('')">white</a> |
-		  <a href="#" onclick="return paint.actions.setBg('checkered-bg.png')">checkered</a>
+		  <a href="#" onclick="return paint.actions.setBg('checkered-bg.png')">checkered</a> |
+		  <a href="#" onclick="return paint.actions.setBg('')">white</a>
 		</p>
 		<p>
 		  This tool lets you generate your own .ICO files that you can use as web site favicons. It is written entirely in Javascript (no lame-o server requests) and it does *not* use the HTML5 canvas element to create the data url (you probably don’t care, but I think that’s pretty cool). If you’re looking to generate a really fancy and pretty favicon.ico file, then you’re probably at the wrong place. You can read more about this tool and/or report any bugs/praise/blame on <a href="http://mrcoles.com/blog/javascript-favicon-creator/">this blog post announcing the favicon creator</a>.
