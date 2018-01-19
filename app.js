@@ -7,7 +7,6 @@ var paint = new (function() {
       color = '',
       color_on = false,
       select_color = false,
-      edited = false,
       tool_type = 'brush',
       tools = ['brush', 'bucket', 'eraser'],
       grid = false;
@@ -89,6 +88,17 @@ var paint = new (function() {
     }
   }
 
+  // Auto-update
+  var _updateTimeout = null;
+
+  function autoUpdateImg() {
+    window.clearTimeout(_updateTimeout);
+    _updatedTimeout = window.setTimeout(function() {
+      generateLowResIco(dimension);
+    }, 1000);
+  }
+  
+
   // Events
   this.pixelMouseDown = function(elt, evt) {
     if (evt && evt.preventDefault) evt.preventDefault();
@@ -100,19 +110,15 @@ var paint = new (function() {
       return false;
     }
     color_on = true;
-    if (!edited) edited = true;
+    
     return self.pixelMouseOver(elt);
   }
   this.pixelMouseOver = function(elt) {
     if (color_on) {
       toolFns[tool_type](elt);
-      if (!edited) edited = true;
+      autoUpdateImg();
     }
     return false;
-  }
-
-  window.onbeforeunload = function() {
-    if (edited) return 'You will lose edits if you leave this page, are you sure you want to continue?';
   }
 
   window.onload = function() {
@@ -164,6 +170,30 @@ var paint = new (function() {
       $(tools[j]).onclick = toolClick;
     }
     $(tool_type).style.fontWeight = 'bold';
+
+    // Load state
+    (function() {
+
+      var rows = PixelStore.get(),
+          row, y_inv, y, y_len, x, x_len, color, code;
+
+      if (rows && rows.length) {
+        for (y_len = rows.length, y_inv = 0; y_inv < y_len; y_inv++) {
+          row = rows[y_inv];
+          y = y_len - 1 - y_inv; // haha, data is stored in reverse for y, but not x
+          x_len = row.length;
+          for (x = 0; x < x_len; x++) {
+            color = row[x];
+            code = color[3] === 0 ? '' : 'rgb(' + color.join(',') + ')';
+            $(x + '_' + y).style.backgroundColor = code;
+          }
+        }
+      }
+
+      generateLowResIco();
+
+    })();
+    
   }
 
   // Actions
@@ -192,11 +222,6 @@ var paint = new (function() {
     setBg: function(url) {
       $('main').style.backgroundImage = url ? 'url('+url+')' : 'none';
       return false;
-    },
-    generateImg: function(url) {
-      generateLowResIco(dimension);
-      edited = false;
-      return false;
     }
   }
-})
+})();

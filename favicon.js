@@ -225,6 +225,9 @@
       }
     }
 
+    // save to local storage if possible
+    PixelStore.set(rows);
+
     img = document.createElement('img');
     src = window.generateIcoDataURL(rows);
 
@@ -258,3 +261,35 @@
     return false;
   };
 })(this, this.document);
+
+
+
+// Storage
+var PixelStore = (function(window, undefined) {
+
+  var supported = (window.Storage !== undefined &&
+                   window.localStorage !== undefined &&
+                   window.JSON !== undefined);
+
+  var key = 'pixels';
+
+  return {
+    set: function(rows) {
+      if (supported) {
+        localStorage.setItem(key, JSON.stringify(rows));
+      }
+    },
+    get: function() {
+      if (supported) {
+        var string = localStorage.getItem(key);
+        try {
+          data = JSON.parse(string);
+          return data;
+        } catch(e) {}
+      }
+      return [];
+    }
+    
+  };
+
+})(this);
